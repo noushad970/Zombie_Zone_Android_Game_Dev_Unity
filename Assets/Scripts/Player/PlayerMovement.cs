@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController2D controller;
     public float runSpeed = 40;
     float horizontalMove = 0f;
-    
+
     bool crouch=false;
     public Animator anim;
     [Header("Jump System")]
@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector]
     public bool isAttack;
     [SerializeField] private float attackAnimDelay;
+    
     void Update()
     {
 
@@ -96,7 +97,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !isAttack)
         {
-            isAttack = true;
+            isAttack = true; 
+            DetectNearbyZombies();
         }
         if (isAttack)
         {
@@ -112,6 +114,20 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("Attack", false);
         isAttack = false;
     }
+    void DetectNearbyZombies()
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 2.5f);
+        int count = 1;
+        foreach (Collider2D hit in hits)
+        {
+            if (hit.CompareTag("Zombie") && count==1)
+            {
+                Debug.Log($"Detected object with tag : {hit.name}");
+                count++;
+                // Add your logic here (e.g., damage, interact)
+                hit.GetComponent<EnemyAI>().TakeDamage(100);
+            }
+        }
+    }
 
-    
 }

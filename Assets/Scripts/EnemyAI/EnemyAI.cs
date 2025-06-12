@@ -28,7 +28,11 @@ public class EnemyAI : MonoBehaviour
     void Update()
     {
         
-        HandleAI(); // Check if it's time to perform the next raycast
+        
+        if (player.GetComponent<PlayerHealth>().getHealth() > 0)
+        {
+            HandleAI();
+        }
         
         
     }
@@ -104,6 +108,8 @@ public class EnemyAI : MonoBehaviour
         {
             StartCoroutine(shakeDelay());
             AudioManager.instance.BitePlay();
+
+            player.GetComponent<PlayerHealth>().TakeDamage(10);
             Debug.Log("Player detected: " + hit.collider.name);
         }
         else

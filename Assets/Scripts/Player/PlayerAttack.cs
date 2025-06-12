@@ -12,10 +12,7 @@ public class PlayerAttack : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !playerMovement.isAttack)
-        {
-            DetectNearbyZombies();
-        }
+        
     }
 
     void DetectNearbyZombies()
@@ -30,6 +27,7 @@ public class PlayerAttack : MonoBehaviour
             {
                 Debug.Log("Zombie detected in range: " + zombie.name);
                 // You can do other things here like attack, mark target, etc.
+                zombie.GetComponent<EnemyAI>().TakeDamage(100); // Example of dealing damage to the zombie
             }
         }
     }
