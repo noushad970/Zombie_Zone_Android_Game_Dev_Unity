@@ -16,4 +16,5 @@ public class PlayerObject : ScriptableObject
     }
 
     public List<AllPlayer> allPlayersDetails = new List<AllPlayer>();
+    public int CurrentlySelectedPlayer = 0;
 }

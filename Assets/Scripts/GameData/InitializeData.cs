@@ -10,9 +10,6 @@ public class InitializeData : MonoBehaviour
         
         GameDataManager.playerObject = allPlayerDetails;
         GameDataManager.LoadGameData();
-        GameDataManager.UnlockPlayerByName("Axel");
-        GameDataManager.IsPlayerUnlocked("Axel");
-        GameDataManager.IsPlayerUnlocked("Zane"); 
 
     }
 

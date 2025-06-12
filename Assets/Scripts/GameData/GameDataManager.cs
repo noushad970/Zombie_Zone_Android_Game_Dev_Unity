@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -98,5 +98,17 @@ public static class GameDataManager
 
         var player = playerObject.allPlayersDetails.Find(p => p.playerName == name);
         return player != null && player.isPlayerBuyed;
+    }
+    
+    //player selection management
+    public static void SetSelectedPlayer(int index)
+    {
+        gameData.selectedPlayerIndex = index;
+        SaveGameData();
+    }
+
+    public static int GetSelectedPlayer()
+    {
+        return gameData.selectedPlayerIndex;
     }
 }

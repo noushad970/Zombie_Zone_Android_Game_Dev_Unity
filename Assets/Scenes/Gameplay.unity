@@ -228,6 +228,27 @@ MonoBehaviour:
   - {fileID: 188156795}
   - {fileID: 572049073}
   - {fileID: 1326488514}
+  yesButtonsButton:
+  - {fileID: 1645718474}
+  - {fileID: 1434508855}
+  - {fileID: 2049756129}
+  - {fileID: 453111674}
+  - {fileID: 1440501652}
+  - {fileID: 1590573480}
+  NoButtonsButton:
+  - {fileID: 1838259134}
+  - {fileID: 165210490}
+  - {fileID: 1727904923}
+  - {fileID: 188156797}
+  - {fileID: 572049075}
+  - {fileID: 1326488515}
+  selectCharButton:
+  - {fileID: 2018634406}
+  - {fileID: 1555707680}
+  - {fileID: 1081543009}
+  - {fileID: 1551297325}
+  - {fileID: 760544249}
+  - {fileID: 13538686}
 --- !u!114 &8105250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17945,7 +17966,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 861391520}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
