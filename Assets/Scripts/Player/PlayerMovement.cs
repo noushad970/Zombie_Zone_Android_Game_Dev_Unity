@@ -42,6 +42,10 @@ public class PlayerMovement : MonoBehaviour
         jump = false;
 
     }
+    private void OnEnable()
+    {
+       gameObject.GetComponent<PlayerMovement>().enabled= true;
+    }
     private void jumpSystem()
     {
         if (Input.GetButtonDown("Jump") && !playingJumpingAnimation)

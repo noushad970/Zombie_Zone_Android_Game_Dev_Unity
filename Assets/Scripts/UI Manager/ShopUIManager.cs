@@ -15,14 +15,21 @@ public class ShopUIManager : MonoBehaviour
     [SerializeField] private GameObject[] isSelected,NotSelected;
 
     [SerializeField] private GameObject[] areYouSureSection,yesButtons,NoButtons;
+    [SerializeField] private GameObject areYouSureSectionMain;
     [SerializeField] private Button[] yesButtonsButton, NoButtonsButton;
 
     [SerializeField] private Button[] selectCharButton;
+
+
+    [SerializeField] private GameObject homeSection, shopSection;
+    [SerializeField] private Button backButton;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         GameDataManager.LoadGameData();
         StartCoroutine(initializeAllAfter1Sec());
+        areYouSureSectionMain.SetActive(false);
         buyPlayersButton[0].onClick.AddListener(onClickPlayer0);
         buyPlayersButton[1].onClick.AddListener(onClickPlayer1);
         buyPlayersButton[2].onClick.AddListener(onClickPlayer2);
@@ -49,6 +56,8 @@ public class ShopUIManager : MonoBehaviour
         NoButtonsButton[3].onClick.AddListener(onClickNoButton3);
         NoButtonsButton[4].onClick.AddListener(onClickNoButton4);
         NoButtonsButton[5].onClick.AddListener(onClickNoButton5);
+
+        backButton.onClick.AddListener(onClickBackButton);
 
 
     }
@@ -114,6 +123,7 @@ public class ShopUIManager : MonoBehaviour
         for (int i = 0; i < areYouSureSection.Length; i++)
         {
             areYouSureSection[i].SetActive(false);
+            areYouSureSectionMain.SetActive(false);
         }
     }
     private void onClickPlayer0()
@@ -144,6 +154,8 @@ public class ShopUIManager : MonoBehaviour
             if (GameDataManager.GetCoins()>= allPlayerDetails.allPlayersDetails[1].playerPrice)
             {
                 areYouSureSection[1].SetActive(true);
+
+                areYouSureSectionMain.SetActive(true);
             }
             else
             {
@@ -162,6 +174,7 @@ public class ShopUIManager : MonoBehaviour
             onClickPlayer1(); // Refresh selection
             GameDataManager.SetSelectedPlayer(1); // Set the selected player index
             areYouSureSection[1].SetActive(false);
+            areYouSureSectionMain.SetActive(false);
         }
         else
         {
@@ -171,6 +184,7 @@ public class ShopUIManager : MonoBehaviour
     private void onClickNoButton1()
     {
         areYouSureSection[1].SetActive(false);
+        areYouSureSectionMain.SetActive(false);
     }
     private void onClickPlayer2()
     {
@@ -186,6 +200,7 @@ public class ShopUIManager : MonoBehaviour
             if (GameDataManager.GetCoins() >= allPlayerDetails.allPlayersDetails[2].playerPrice)
             {
                 areYouSureSection[2].SetActive(true);
+                areYouSureSectionMain.SetActive(true);
             }
             else
             {
@@ -204,6 +219,7 @@ public class ShopUIManager : MonoBehaviour
             GameDataManager.IsPlayerUnlocked(allPlayerDetails.allPlayersDetails[2].playerName);
             onClickPlayer1(); // Refresh selection
             areYouSureSection[2].SetActive(false);
+            areYouSureSectionMain.SetActive(false);
         }
         else
         {
@@ -213,6 +229,7 @@ public class ShopUIManager : MonoBehaviour
     private void onClickNoButton2()
     {
         areYouSureSection[2].SetActive(false);
+        areYouSureSectionMain.SetActive(false);
     }
     private void onClickPlayer3()
     {
@@ -228,6 +245,7 @@ public class ShopUIManager : MonoBehaviour
            if( GameDataManager.GetCoins() >= allPlayerDetails.allPlayersDetails[3].playerPrice)
             {
                 areYouSureSection[3].SetActive(true);
+                areYouSureSectionMain.SetActive(true);
             }
             else
             {
@@ -246,6 +264,7 @@ public class ShopUIManager : MonoBehaviour
             GameDataManager.IsPlayerUnlocked(allPlayerDetails.allPlayersDetails[3].playerName);
             onClickPlayer1(); // Refresh selection
             areYouSureSection[3].SetActive(false);
+            areYouSureSectionMain.SetActive(false);
         }
         else
         {
@@ -255,6 +274,7 @@ public class ShopUIManager : MonoBehaviour
     private void onClickNoButton3()
     {
         areYouSureSection[3].SetActive(false);
+        areYouSureSectionMain.SetActive(false);
     }
 
 
@@ -273,6 +293,7 @@ public class ShopUIManager : MonoBehaviour
             if (GameDataManager.GetCoins() >= allPlayerDetails.allPlayersDetails[4].playerPrice)
             {
                 areYouSureSection[4].SetActive(true);
+                areYouSureSectionMain.SetActive(true);
             }
             else
             {
@@ -291,6 +312,7 @@ public class ShopUIManager : MonoBehaviour
             GameDataManager.IsPlayerUnlocked(allPlayerDetails.allPlayersDetails[4].playerName);
             onClickPlayer1(); // Refresh selection
             areYouSureSection[4].SetActive(false);
+            areYouSureSectionMain.SetActive(false);
         }
         else
         {
@@ -300,6 +322,7 @@ public class ShopUIManager : MonoBehaviour
     private void onClickNoButton4()
     {
         areYouSureSection[4].SetActive(false);
+        areYouSureSectionMain.SetActive(false);
     }
     private void onClickPlayer5()
     {
@@ -315,6 +338,7 @@ public class ShopUIManager : MonoBehaviour
             if(GameDataManager.GetCoins() >= allPlayerDetails.allPlayersDetails[5].playerPrice)
             {
                 areYouSureSection[5].SetActive(true);
+                areYouSureSectionMain.SetActive(true);
             }
             else
             {
@@ -333,6 +357,7 @@ public class ShopUIManager : MonoBehaviour
             GameDataManager.IsPlayerUnlocked(allPlayerDetails.allPlayersDetails[5].playerName);
             onClickPlayer1(); // Refresh selection
             areYouSureSection[5].SetActive(false);
+            areYouSureSectionMain.SetActive(false);
         }
         else
         {
@@ -342,6 +367,12 @@ public class ShopUIManager : MonoBehaviour
     private void onClickNoButton5()
     {
         areYouSureSection[5].SetActive(false);
+        areYouSureSectionMain.SetActive(false);
     }
 
+    private void onClickBackButton()
+    {
+        homeSection.SetActive(true);
+        shopSection.SetActive(false);
+    }
 }

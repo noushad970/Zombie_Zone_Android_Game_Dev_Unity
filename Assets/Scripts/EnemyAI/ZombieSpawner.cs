@@ -15,8 +15,13 @@ public class ZombieSpawner : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player"); // Find the player by tag
+    
     }
-
+    private void OnEnable()
+    {
+        Debug.Log("Starting Zombie Spawner");
+        startGame();
+    }
     void Update()
     {
         // Continuously check if the player is within the spawn radius
@@ -35,7 +40,11 @@ public class ZombieSpawner : MonoBehaviour
             }
         }
     }
-
+    void startGame()
+    {
+        currentZombieCount = 0; // Reset zombie count
+    }
+    
     void StartSpawning()
     {
         // Start spawning zombies
