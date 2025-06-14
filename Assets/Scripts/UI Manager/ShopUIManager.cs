@@ -128,7 +128,8 @@ public class ShopUIManager : MonoBehaviour
     }
     private void onClickPlayer0()
     {
-        if(allPlayerDetails.allPlayersDetails[0].isPlayerBuyed)
+        UIButtonSoundManager.instance.buttonAudioPlay();
+        if (allPlayerDetails.allPlayersDetails[0].isPlayerBuyed)
         {
             DisableSelection();
             GameDataManager.SetSelectedPlayer(0); // Set the selected player index
@@ -142,7 +143,8 @@ public class ShopUIManager : MonoBehaviour
     }
     private void onClickPlayer1()
     {
-        if(allPlayerDetails.allPlayersDetails[1].isPlayerBuyed)
+        UIButtonSoundManager.instance.buttonAudioPlay();
+        if (allPlayerDetails.allPlayersDetails[1].isPlayerBuyed)
         {
             DisableSelection();
             GameDataManager.SetSelectedPlayer(1); // Set the selected player index
@@ -165,6 +167,7 @@ public class ShopUIManager : MonoBehaviour
     }
     private void onClickYesButton1()
     {
+        UIButtonSoundManager.instance.buttonAudioPlay();
         if (GameDataManager.GetCoins() >= allPlayerDetails.allPlayersDetails[1].playerPrice)
         {
             GameDataManager.AddCoins(-allPlayerDetails.allPlayersDetails[1].playerPrice);
@@ -175,6 +178,7 @@ public class ShopUIManager : MonoBehaviour
             GameDataManager.SetSelectedPlayer(1); // Set the selected player index
             areYouSureSection[1].SetActive(false);
             areYouSureSectionMain.SetActive(false);
+            UIButtonSoundManager.instance.purchaseAudioPlay();
         }
         else
         {
@@ -183,12 +187,14 @@ public class ShopUIManager : MonoBehaviour
     }
     private void onClickNoButton1()
     {
+        UIButtonSoundManager.instance.buttonAudioPlay();
         areYouSureSection[1].SetActive(false);
         areYouSureSectionMain.SetActive(false);
     }
     private void onClickPlayer2()
     {
-        if(allPlayerDetails.allPlayersDetails[2].isPlayerBuyed)
+        UIButtonSoundManager.instance.buttonAudioPlay();
+        if (allPlayerDetails.allPlayersDetails[2].isPlayerBuyed)
         {
             DisableSelection();
             GameDataManager.SetSelectedPlayer(2); // Set the selected player index
@@ -210,6 +216,7 @@ public class ShopUIManager : MonoBehaviour
     }
     private void onClickYesButton2()
     {
+        UIButtonSoundManager.instance.buttonAudioPlay();
         if (GameDataManager.GetCoins() >= allPlayerDetails.allPlayersDetails[2].playerPrice)
         {
             GameDataManager.AddCoins(-allPlayerDetails.allPlayersDetails[2].playerPrice);
@@ -220,6 +227,7 @@ public class ShopUIManager : MonoBehaviour
             onClickPlayer1(); // Refresh selection
             areYouSureSection[2].SetActive(false);
             areYouSureSectionMain.SetActive(false);
+            UIButtonSoundManager.instance.purchaseAudioPlay();
         }
         else
         {
@@ -228,12 +236,14 @@ public class ShopUIManager : MonoBehaviour
     }
     private void onClickNoButton2()
     {
+        UIButtonSoundManager.instance.buttonAudioPlay();
         areYouSureSection[2].SetActive(false);
         areYouSureSectionMain.SetActive(false);
     }
     private void onClickPlayer3()
     {
-        if(allPlayerDetails.allPlayersDetails[3].isPlayerBuyed)
+        UIButtonSoundManager.instance.buttonAudioPlay();
+        if (allPlayerDetails.allPlayersDetails[3].isPlayerBuyed)
         {
             DisableSelection();
             GameDataManager.SetSelectedPlayer(3); // Set the selected player index
@@ -255,6 +265,8 @@ public class ShopUIManager : MonoBehaviour
     }
     private void onClickYesButton3()
     {
+        UIButtonSoundManager.instance.buttonAudioPlay();
+
         if (GameDataManager.GetCoins() >= allPlayerDetails.allPlayersDetails[3].playerPrice)
         {
             GameDataManager.AddCoins(-allPlayerDetails.allPlayersDetails[3].playerPrice);
@@ -265,6 +277,7 @@ public class ShopUIManager : MonoBehaviour
             onClickPlayer1(); // Refresh selection
             areYouSureSection[3].SetActive(false);
             areYouSureSectionMain.SetActive(false);
+            UIButtonSoundManager.instance.purchaseAudioPlay();
         }
         else
         {
@@ -273,6 +286,8 @@ public class ShopUIManager : MonoBehaviour
     }
     private void onClickNoButton3()
     {
+        UIButtonSoundManager.instance.buttonAudioPlay();
+
         areYouSureSection[3].SetActive(false);
         areYouSureSectionMain.SetActive(false);
     }
@@ -281,7 +296,9 @@ public class ShopUIManager : MonoBehaviour
 
     private void onClickPlayer4()
     {
-        if(allPlayerDetails.allPlayersDetails[4].isPlayerBuyed)
+        UIButtonSoundManager.instance.buttonAudioPlay();
+
+        if (allPlayerDetails.allPlayersDetails[4].isPlayerBuyed)
         {
             DisableSelection();
             isSelected[4].SetActive(true);
@@ -303,6 +320,8 @@ public class ShopUIManager : MonoBehaviour
     }
     private void onClickYesButton4()
     {
+        UIButtonSoundManager.instance.buttonAudioPlay();
+
         if (GameDataManager.GetCoins() >= allPlayerDetails.allPlayersDetails[4].playerPrice)
         {
             GameDataManager.AddCoins(-allPlayerDetails.allPlayersDetails[4].playerPrice);
@@ -313,6 +332,7 @@ public class ShopUIManager : MonoBehaviour
             onClickPlayer1(); // Refresh selection
             areYouSureSection[4].SetActive(false);
             areYouSureSectionMain.SetActive(false);
+            UIButtonSoundManager.instance.purchaseAudioPlay();
         }
         else
         {
@@ -321,12 +341,16 @@ public class ShopUIManager : MonoBehaviour
     }
     private void onClickNoButton4()
     {
+        UIButtonSoundManager.instance.buttonAudioPlay();
+
         areYouSureSection[4].SetActive(false);
         areYouSureSectionMain.SetActive(false);
     }
     private void onClickPlayer5()
     {
-        if(allPlayerDetails.allPlayersDetails[5].isPlayerBuyed)
+        UIButtonSoundManager.instance.buttonAudioPlay();
+
+        if (allPlayerDetails.allPlayersDetails[5].isPlayerBuyed)
         {
             DisableSelection();
             GameDataManager.SetSelectedPlayer(5); // Set the selected player index
@@ -348,6 +372,8 @@ public class ShopUIManager : MonoBehaviour
     }
     private void onClickYesButton5()
     {
+        UIButtonSoundManager.instance.buttonAudioPlay();
+
         if (GameDataManager.GetCoins() >= allPlayerDetails.allPlayersDetails[5].playerPrice)
         {
             GameDataManager.AddCoins(-allPlayerDetails.allPlayersDetails[5].playerPrice);
@@ -358,6 +384,7 @@ public class ShopUIManager : MonoBehaviour
             onClickPlayer1(); // Refresh selection
             areYouSureSection[5].SetActive(false);
             areYouSureSectionMain.SetActive(false);
+            UIButtonSoundManager.instance.purchaseAudioPlay();
         }
         else
         {
@@ -366,12 +393,16 @@ public class ShopUIManager : MonoBehaviour
     }
     private void onClickNoButton5()
     {
+        UIButtonSoundManager.instance.buttonAudioPlay();
+
         areYouSureSection[5].SetActive(false);
         areYouSureSectionMain.SetActive(false);
     }
 
     private void onClickBackButton()
     {
+        UIButtonSoundManager.instance.buttonAudioPlay();
+
         homeSection.SetActive(true);
         shopSection.SetActive(false);
     }

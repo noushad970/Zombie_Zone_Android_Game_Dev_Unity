@@ -1,12 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
     public CharacterController2D controller;
     public float runSpeed = 40;
     float horizontalMove = 0f;
-
+    float inputHorizontalMove = 0f;
     bool crouch=false;
     public Animator anim;
     [Header("Jump System")]
@@ -17,20 +18,66 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector]
     public bool isAttack;
     [SerializeField] private float attackAnimDelay;
-    
+
+    [Header("Player UI Buttons")]
+    [SerializeField] private UIButtonStateTracker leftButton, rightButton, jumpButton, attackButton,boostButton;
+
+    [SerializeField] private AudioSource attackAudio, JumpAudio, walkAudio, RunAudio;
+    private void Start()
+    {
+        
+        //jumpButton.onClick.AddListener(jumpSystem);
+        //attackButton.onClick.AddListener(AttackSystem);
+    }
     void Update()
     {
-
         if (!isAttack)
         {
             jumpSystem();
             moveSystem();
         }
         AttackSystem();
+        walkAndRunSound();
         //Debug.Log("playingJumpingAnimation: " + playingJumpingAnimation);
-        
-    }
 
+        if (leftButton.isPressed)
+        {
+
+            inputHorizontalMove = -1f;
+
+        }
+        else if(rightButton.isPressed)
+        {
+            
+            inputHorizontalMove = 1;
+        }
+        else
+        {
+            if (walkAudio!=null)
+            {
+                walkAudio.Stop();
+            }
+            inputHorizontalMove = 0f;
+        }
+
+    }
+    private void walkAndRunSound()
+    {
+        if(!jump && !playingJumpingAnimation && runSpeed == 10)
+        {
+            if (!walkAudio.isPlaying && walkAudio != null && horizontalMove!=0)
+            {
+                walkAudio.Play();
+            }
+        }
+        if (!jump && !playingJumpingAnimation && runSpeed == 40 && horizontalMove != 0)
+        {
+            if (!RunAudio.isPlaying && RunAudio != null)
+            {
+                RunAudio.Play();
+            }
+        }
+    }
     public void OnLanding()
     {
         anim.SetBool("Jump", false);
@@ -48,14 +95,23 @@ public class PlayerMovement : MonoBehaviour
     }
     private void jumpSystem()
     {
-        if (Input.GetButtonDown("Jump") && !playingJumpingAnimation)
+        //Input.GetButtonDown("Jump") &&
+        if (jumpButton.isPressed && !isAttack)
         {
-            jump = true;
-            playingJumpingAnimation = true;
-            anim.Play("jump");
+
+            if (!playingJumpingAnimation)
+            {
+                if (!JumpAudio.isPlaying || JumpAudio != null)
+                {
+                    JumpAudio.Play();
+                }
+                jump = true;
+                playingJumpingAnimation = true;
+                anim.Play("jump");
+            }
+            if (playingJumpingAnimation)
+                StartCoroutine(jumpWait());
         }
-        if (playingJumpingAnimation)
-            StartCoroutine(jumpWait());
     }
     IEnumerator jumpWait()
     {
@@ -65,8 +121,8 @@ public class PlayerMovement : MonoBehaviour
     }
     private void moveSystem()
     {
-        horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-
+        //Input.GetAxisRaw("Horizontal")*
+        horizontalMove = inputHorizontalMove* runSpeed;
         //if (Input.GetButtonDown("Crouch"))
         //{
         //    crouch = true;
@@ -76,33 +132,45 @@ public class PlayerMovement : MonoBehaviour
         //}
 
         ///other
-        if (Input.GetKey(KeyCode.RightShift))
+        //Input.GetKey(KeyCode.RightShift)
+        if (boostButton.isPressed)
         {
             runSpeed = 40f;
+            
         }
         else
         {
+            
             runSpeed = 10f;
         }
         if (horizontalMove != 0 && runSpeed == 10 && playingJumpingAnimation == false)
         {
+            
             anim.SetFloat("Speed", 0.5f);
         }
         else if (horizontalMove != 0 && runSpeed == 40 && playingJumpingAnimation == false)
         {
-            anim.SetFloat("Speed", 1.4f);
+            anim.SetFloat("Speed", 1.4f); 
+           
         }
         else
         {
             anim.SetFloat("Speed", 0f);
         }
+
+        
     }
     private void AttackSystem()
     {
-        if (Input.GetMouseButtonDown(0) && !isAttack)
+        //Input.GetMouseButtonDown(0) &&
+        if ( attackButton.isPressed && !isAttack)
         {
             isAttack = true; 
-            DetectNearbyZombies();
+            if(!attackAudio.isPlaying || attackAudio != null)
+            {
+                attackAudio.Play();
+            }
+            StartCoroutine(DetectNearbyZombies());
         }
         if (isAttack)
         {
@@ -118,8 +186,9 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("Attack", false);
         isAttack = false;
     }
-    void DetectNearbyZombies()
+    IEnumerator DetectNearbyZombies()
     {
+        yield return new WaitForSeconds(0.3f);
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 2.5f);
         int count = 1;
         foreach (Collider2D hit in hits)

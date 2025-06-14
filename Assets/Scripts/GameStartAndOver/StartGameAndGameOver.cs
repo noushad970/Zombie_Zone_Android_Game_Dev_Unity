@@ -16,16 +16,29 @@ public class StartGameAndGameOver : MonoBehaviour
         mainMenuButton.onClick.AddListener(goToMainMenu);
         loadingPanel.SetActive(false);
       
-        playerPosAtStart= new Vector3(8f, -0.12f, 0f);
+        playerPosAtStart= new Vector3(3f, 1.12f, 0f);
             
     }
     private void Update()
     {
        
-        if(PlayerHealth.playerCurrentHealth > 0)
+        ConditionalFunction();
+
+    }
+
+    private void ConditionalFunction()
+    {
+        if (PlayerHealth.playerCurrentHealth > 0)
         {
             gameOverPanel.SetActive(false);
 
+        }
+        if (PlayerHealth.isGotoMainMenu)
+        {
+            goToMainMenu();
+            disablePlayerAndMap();
+            PlayerHealth.isGotoMainMenu = false; // Reset the flag
+            DestroyAllClones();
         }
         if (PlayerHealth.isPlayerDead)
         {
@@ -36,11 +49,33 @@ public class StartGameAndGameOver : MonoBehaviour
         {
             gameOverPanel.SetActive(false);
         }
-            Debug.Log("Player Health: " + PlayerHealth.playerCurrentHealth);
+        if (MenuPanel.activeSelf && !gamePlayPanel.activeSelf)
+        {
+            DestroyAllClones();
+        }
+        if (PlayerHealth.isRestartGame)
+        {
+            PlayerHealth.isRestartGame = false; // Reset the flag
+            DestroyAllClones();
+            startGame();
+        }
     }
     private void OnEnable()
     {
         
+    }
+    public void DestroyAllClones()
+    {
+        GameObject[] allObjects = FindObjectsOfType<GameObject>();
+
+        foreach (GameObject obj in allObjects)
+        {
+            if (obj.name.Contains("Clone"))
+            {
+                Destroy(obj);
+            }
+        }
+
     }
     void startGame()
     {
@@ -55,12 +90,13 @@ public class StartGameAndGameOver : MonoBehaviour
     {
         loadingPanel.SetActive(true);
         MenuPanel.SetActive(false);
+        gamePlayPanel.SetActive(false);
         disablePlayerAndMap();
-        yield return new WaitForSeconds(1f); // Wait for 1 second before starting the game
+        yield return new WaitForSeconds(2f); // Wait for 1 second before starting the game
         gamePlayPanel.SetActive(true);
         players[GameDataManager.GetSelectedPlayer()].SetActive(true);
         //will be dynamic in future
-        maps[0].SetActive(true);
+        maps[GameDataManager.GetSelectedMapIndex()].SetActive(true);
         MenuPanel.SetActive(false);
         loadingPanel.SetActive(false);
     }

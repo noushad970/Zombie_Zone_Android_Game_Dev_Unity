@@ -6588,13 +6588,14 @@ GameObject:
   - component: {fileID: 3427268431462493077}
   - component: {fileID: 2334326347814750001}
   - component: {fileID: 2358143941139398442}
+  - component: {fileID: 8798420155752592122}
   m_Layer: 10
   m_Name: PlayerPirate
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5501334052416139478
 Transform:
   m_ObjectHideFlags: 0
@@ -6782,7 +6783,30 @@ MonoBehaviour:
   runSpeed: 40
   anim: {fileID: 6185252498876390187}
   jumpAnimDelay: 0.8
+  isAttack: 0
   attackAnimDelay: 0.8
+  leftButton: {fileID: 0}
+  rightButton: {fileID: 0}
+  jumpButton: {fileID: 0}
+  attackButton: {fileID: 0}
+  boostButton: {fileID: 0}
+  attackAudio: {fileID: 0}
+  JumpAudio: {fileID: 0}
+  walkAudio: {fileID: 0}
+  RunAudio: {fileID: 0}
+--- !u!114 &8798420155752592122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8514942637073946015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ccdf5e80e9682b4aa9c246c1ab16e08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 6185252498876390187}
 --- !u!1 &8556569789196354587
 GameObject:
   m_ObjectHideFlags: 0

@@ -155,13 +155,14 @@ GameObject:
   - component: {fileID: 8282619331937665959}
   - component: {fileID: 2332778346756996283}
   - component: {fileID: 437508245305629872}
+  - component: {fileID: 3504691912718125513}
   m_Layer: 10
   m_Name: PlayerRobot
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1547146055390397779
 Transform:
   m_ObjectHideFlags: 0
@@ -349,7 +350,21 @@ MonoBehaviour:
   runSpeed: 40
   anim: {fileID: 6907995732996763915}
   jumpAnimDelay: 0.8
+  isAttack: 0
   attackAnimDelay: 0.2
+--- !u!114 &3504691912718125513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3617695372735448519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ccdf5e80e9682b4aa9c246c1ab16e08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 6907995732996763915}
 --- !u!1 &3961628176238045445
 GameObject:
   m_ObjectHideFlags: 0

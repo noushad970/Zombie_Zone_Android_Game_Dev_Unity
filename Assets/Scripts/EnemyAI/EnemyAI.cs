@@ -27,11 +27,14 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        
-        
-        if (player.GetComponent<PlayerHealth>().getHealth() > 0)
+
+
+        if (player != null)
         {
-            HandleAI();
+            if (player.GetComponent<PlayerHealth>().getHealth() > 0)
+            {
+                HandleAI();
+            }
         }
         
         
@@ -102,7 +105,6 @@ public class EnemyAI : MonoBehaviour
         if (!died)
             anim.Play("attack");
 
-        Debug.DrawRay(rayOrigin, direction * raycastRange, Color.red, 1f); // for debugging in Scene view
 
         if (hit.collider != null && hit.collider.CompareTag("Player"))
         {
@@ -110,7 +112,6 @@ public class EnemyAI : MonoBehaviour
             AudioManager.instance.BitePlay();
 
             player.GetComponent<PlayerHealth>().TakeDamage(10);
-            Debug.Log("Player detected: " + hit.collider.name);
         }
         else
         {
@@ -135,7 +136,6 @@ public class EnemyAI : MonoBehaviour
     {
         health -= damage;
         nextRaycastTime = Time.time + raycastInterval;
-        Debug.Log("Zombie took damage! Current health: " + health);
         anim.Play("hurt");
         StartCoroutine(BloodDelay());
         if (health <= 0)
@@ -149,7 +149,11 @@ public class EnemyAI : MonoBehaviour
         anim.Play("died");
         died =true;
         Debug.Log("Zombie died!");
-        
+        int randomCoins = Random.Range(3, 8); // Random coins between 3 and 8
+        InGameCollectionUI.totalCoinCollectedinOneGame += randomCoins; // Increment total coins collected
+        InGameCollectionUI.totalKillinOneGame += 1; // Increment total kills
+        GameDataManager.AddCoins(randomCoins);
+        GameDataManager.AddZombieKill(1);
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
         stopWalkAudio=true;
         AudioManager.instance.zombieDiePlay();

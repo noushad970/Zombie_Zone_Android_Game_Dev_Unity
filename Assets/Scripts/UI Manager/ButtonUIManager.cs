@@ -20,42 +20,40 @@ public class ButtonUIManager : MonoBehaviour
     
     private void onClickPlayButton()
     {
-        
-        Debug.Log("Play button clicked");
+        UIButtonSoundManager.instance.buttonAudioPlay();
 
         // Add logic to start the game or load the game scene
     }
     private void onClickShopButton()
-    {   
+    {
+        UIButtonSoundManager.instance.buttonAudioPlay();
         homeButtonsSection.SetActive(false);
         ShopSection.SetActive(true);
-        Debug.Log("Shop button clicked");
         // Add logic to open the shop UI
     }
 
     private void onClickOptionButton()
     {
-        homeButtonsSection.SetActive(false);
-        Debug.Log("Option button clicked");
+        UIButtonSoundManager.instance.buttonAudioPlay();
+        //homeButtonsSection.SetActive(false);
         // Add logic to open the options menu
     }
     private void onClickProfileButton()
     {
-        homeButtonsSection.SetActive(false);
-        Debug.Log("Profile button clicked");
+        UIButtonSoundManager.instance.buttonAudioPlay();
+        //homeButtonsSection.SetActive(false);
         // Add logic to open the profile UI
     }
 
     private void onClickAboutButton()
     {
-        homeButtonsSection.SetActive(false);
-        Debug.Log("About button clicked");
+        UIButtonSoundManager.instance.buttonAudioPlay();
+        //homeButtonsSection.SetActive(false);
         // Add logic to open the about UI
     }
 
     private void onClickExitButton() {
     
-        Debug.Log("Exit button clicked");
         // Add logic to exit the game or close the application
         Application.Quit();
     }

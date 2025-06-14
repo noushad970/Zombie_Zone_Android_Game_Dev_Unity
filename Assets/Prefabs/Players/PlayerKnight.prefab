@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 7055599829982713331}
   - component: {fileID: 1590118179375295276}
   - component: {fileID: 388501827958174600}
+  - component: {fileID: 4833020972517761609}
   m_Layer: 10
   m_Name: PlayerKnight
   m_TagString: Player
@@ -303,7 +304,21 @@ MonoBehaviour:
   runSpeed: 40
   anim: {fileID: 964781739963006492}
   jumpAnimDelay: 0.8
+  isAttack: 0
   attackAnimDelay: 0.8
+--- !u!114 &4833020972517761609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573784474952727324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ccdf5e80e9682b4aa9c246c1ab16e08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 964781739963006492}
 --- !u!1 &647068335687318906
 GameObject:
   m_ObjectHideFlags: 0

@@ -5202,13 +5202,14 @@ GameObject:
   - component: {fileID: 9072057623007617655}
   - component: {fileID: 73392841352095398}
   - component: {fileID: 3716447840812963905}
+  - component: {fileID: 2170103030719504036}
   m_Layer: 10
   m_Name: PlayerGirl2
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9103459559536210060
 Transform:
   m_ObjectHideFlags: 0
@@ -5219,7 +5220,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.88, y: 2.17, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6417849065794138699}
@@ -5396,7 +5397,21 @@ MonoBehaviour:
   runSpeed: 40
   anim: {fileID: 8102635524518073723}
   jumpAnimDelay: 0.8
+  isAttack: 0
   attackAnimDelay: 0.5
+--- !u!114 &2170103030719504036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6847336637333999081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ccdf5e80e9682b4aa9c246c1ab16e08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 8102635524518073723}
 --- !u!1 &9057595825663401600
 GameObject:
   m_ObjectHideFlags: 0
