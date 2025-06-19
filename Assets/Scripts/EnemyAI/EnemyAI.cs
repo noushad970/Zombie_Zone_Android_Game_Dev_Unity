@@ -49,13 +49,13 @@ public class EnemyAI : MonoBehaviour
             // Attack State
             if (Time.time >= nextRaycastTime)
             {
-                PerformRaycast();
+                StartCoroutine(waitaLittle()); // Wait a little before the next raycast
                 nextRaycastTime = Time.time + raycastInterval; // Schedule the next raycast
             }
 
             anim.SetBool("isMoving", false);
         }
-        else if (distanceToPlayer <= detectionRange)
+        else if (distanceToPlayer <= detectionRange && !died)
         {
             // Chase State
             anim.SetBool("isMoving", true);
@@ -73,7 +73,13 @@ public class EnemyAI : MonoBehaviour
             AudioManager.instance.zombieWalk.Stop();
         }
     }
+    IEnumerator waitaLittle()
+    {
+        yield return new WaitForSeconds(0.5f);
 
+        if (!died)
+            PerformRaycast();
+    }
     void MoveTowardsPlayer()
     {
         Vector2 direction = (player.position - transform.position).normalized;
@@ -111,7 +117,6 @@ public class EnemyAI : MonoBehaviour
             StartCoroutine(shakeDelay());
             AudioManager.instance.BitePlay();
 
-            player.GetComponent<PlayerHealth>().TakeDamage(10);
         }
         else
         {
@@ -124,6 +129,7 @@ public class EnemyAI : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         
         CameraFollow.instance.shakeDuration = .3f;
+        player.GetComponent<PlayerHealth>().TakeDamage(10);
     }
     IEnumerator BloodDelay()
     {

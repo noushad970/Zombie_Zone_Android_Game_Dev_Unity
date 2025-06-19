@@ -434,7 +434,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300022, guid: b16755a802c1e6745980e8b652663dbf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -31716,8 +31716,8 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 1160324604451372402}
   spawnInterval: 5
-  maxZombies: 4
-  spawnRadius: 20
+  maxZombies: 25
+  spawnRadius: 1000
 --- !u!1 &4499435026413510574
 GameObject:
   m_ObjectHideFlags: 0
@@ -32700,8 +32700,8 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 5970979858160678069}
   spawnInterval: 5
-  maxZombies: 4
-  spawnRadius: 20
+  maxZombies: 25
+  spawnRadius: 1000
 --- !u!1 &4778691167647835468
 GameObject:
   m_ObjectHideFlags: 0
@@ -33467,8 +33467,8 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 9005784669889520045}
   spawnInterval: 5
-  maxZombies: 4
-  spawnRadius: 20
+  maxZombies: 25
+  spawnRadius: 1000
 --- !u!1 &4969159151218142372
 GameObject:
   m_ObjectHideFlags: 0
@@ -40388,7 +40388,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300014, guid: b16755a802c1e6745980e8b652663dbf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -48829,7 +48829,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6164821129986768690
 Transform:
   m_ObjectHideFlags: 0
@@ -51764,7 +51764,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300040, guid: b16755a802c1e6745980e8b652663dbf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -60963,8 +60963,8 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 8292257327505340230}
   spawnInterval: 5
-  maxZombies: 4
-  spawnRadius: 20
+  maxZombies: 25
+  spawnRadius: 1000
 --- !u!1 &8704751326012025820
 GameObject:
   m_ObjectHideFlags: 0

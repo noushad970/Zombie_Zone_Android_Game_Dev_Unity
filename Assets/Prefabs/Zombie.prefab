@@ -245,7 +245,7 @@ MonoBehaviour:
   detectionRange: 20
   attackRange: 1.4
   moveSpeed: 2
-  attackInterval: 1
+  attackInterval: 0.7
   attackDamage: 4
   bloodParticle: {fileID: 2958149023093492867}
   clickCooldown: 1

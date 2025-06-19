@@ -22,22 +22,22 @@ MonoBehaviour:
     playerDetails: He is a Worrior
     playerPrice: 1000
     playerSkillPrice: 1000
-    isPlayerBuyed: 1
+    isPlayerBuyed: 0
   - playerName: Zane
     playerDetails: 
     playerPrice: 2000
     playerSkillPrice: 1000
-    isPlayerBuyed: 1
+    isPlayerBuyed: 0
   - playerName: Kairo
     playerDetails: 
     playerPrice: 2000
     playerSkillPrice: 1000
-    isPlayerBuyed: 1
+    isPlayerBuyed: 0
   - playerName: Draven
     playerDetails: 
     playerPrice: 4000
     playerSkillPrice: 1000
-    isPlayerBuyed: 1
+    isPlayerBuyed: 0
   - playerName: Orion
     playerDetails: 
     playerPrice: 5000

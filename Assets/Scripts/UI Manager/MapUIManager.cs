@@ -161,6 +161,9 @@ public class MapUIManager : MonoBehaviour
             }
             else
             {
+    
+            DisableNotifier.Instance.gameObject.SetActive(true);
+            DisableNotifier.Instance.showTextNotifier("Not Enough Coins!");
                 Debug.Log("Not Engough Coins!");
             }
         }
@@ -180,6 +183,8 @@ public class MapUIManager : MonoBehaviour
         }
         else
         {
+            DisableNotifier.Instance.gameObject.SetActive(true);
+            DisableNotifier.Instance.showTextNotifier("Not Enough Coins!");
             Debug.Log("Not Enough Coins!");
         }
     }

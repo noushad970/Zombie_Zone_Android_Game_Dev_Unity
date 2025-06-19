@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -11,6 +12,21 @@ public class PlayerHealth : MonoBehaviour
 
     public static int playerCurrentHealth;
     public static bool isPlayerDead = false,isGotoMainMenu=false,isRestartGame=false; // Static variable to check if player is dead
+
+    public Image fillImage; // Assign in Inspector (must be Filled type)
+
+    // Call this function and pass a value between 0 and 100
+    public void UpdateFillBar(float amount)
+    {
+        // Clamp to prevent out-of-range issues
+        amount = Mathf.Clamp(amount, 0f, 100f);
+
+        // Convert 0–100 to 0–1
+        float fillValue = amount / 100f;
+
+        // Apply to the image
+        fillImage.fillAmount = fillValue;
+    }
     private void Start()
     {
         currentHealth = health; // Initialize current health
@@ -20,6 +36,7 @@ public class PlayerHealth : MonoBehaviour
     private void Update()
     {
         playerCurrentHealth= currentHealth; // Update static player current health
+        UpdateFillBar(currentHealth); // Update the fill bar with current health
     }
     private void OnEnable()
     {
@@ -52,6 +69,8 @@ public class PlayerHealth : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         isPlayerDead = true; // Set player dead status
+
+        playerMovement.enabled = true; // Disable player movement
 
     }
     public int getHealth() { 

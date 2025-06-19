@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class InGameCollectionUI : MonoBehaviour
 {
 
-    [SerializeField] private Button pauseButton, resumeButton, restartButton, mainMenuButton,yesMainMenu,yesRestart,NoMainMenu,NoRestart,AfterCompleteRestart,AfterCompleteMainMenu;
+    [SerializeField] private Button pauseButton, resumeButton, restartButton,restartButtonAfterGameOver, mainMenuButton,yesMainMenu,yesRestart,NoMainMenu,NoRestart,AfterCompleteRestart,AfterCompleteMainMenu;
 
     [SerializeField] private GameObject pausePanel, areYouSureRestartPanel, areYouSureMainMenuPanel;
 
@@ -20,6 +20,7 @@ public class InGameCollectionUI : MonoBehaviour
         pauseButton.onClick.AddListener(onClickPauseButton);
         resumeButton.onClick.AddListener(onClickResumeButton);
         restartButton.onClick.AddListener(onClickRestartButton);
+        restartButtonAfterGameOver.onClick.AddListener(onClickRestartButton);
         mainMenuButton.onClick.AddListener(onClickMainMenuButton);
         yesMainMenu.onClick.AddListener(onClickYesMainMenuButton);
         yesRestart.onClick.AddListener(onClickYesRestartButton);

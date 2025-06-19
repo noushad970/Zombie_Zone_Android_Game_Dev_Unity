@@ -138,6 +138,8 @@ public class ShopUIManager : MonoBehaviour
         }
         else
         {
+            DisableNotifier.Instance.gameObject.SetActive(true);
+            DisableNotifier.Instance.showTextNotifier("Player not buyed yet!");
             Debug.Log("Player not buyed yet!");
         }
     }
@@ -161,6 +163,9 @@ public class ShopUIManager : MonoBehaviour
             }
             else
             {
+
+                DisableNotifier.Instance.gameObject.SetActive(true);
+                DisableNotifier.Instance.showTextNotifier("Not Enough Coins!");
                 Debug.Log("Not Engough Coins!");
             }
         }
@@ -182,6 +187,8 @@ public class ShopUIManager : MonoBehaviour
         }
         else
         {
+            DisableNotifier.Instance.gameObject.SetActive(true);
+            DisableNotifier.Instance.showTextNotifier("Not Enough Coins!");
             Debug.Log("Not Enough Coins!");
         }
     }
@@ -210,6 +217,8 @@ public class ShopUIManager : MonoBehaviour
             }
             else
             {
+                DisableNotifier.Instance.gameObject.SetActive(true);
+                DisableNotifier.Instance.showTextNotifier("Not Enough Coins!");
                 Debug.Log("Not Engough Coins!");
             }
         }
@@ -231,6 +240,8 @@ public class ShopUIManager : MonoBehaviour
         }
         else
         {
+            DisableNotifier.Instance.gameObject.SetActive(true);
+            DisableNotifier.Instance.showTextNotifier("Not Enough Coins!");
             Debug.Log("Not Enough Coins!");
         }
     }
@@ -259,6 +270,8 @@ public class ShopUIManager : MonoBehaviour
             }
             else
             {
+                DisableNotifier.Instance.gameObject.SetActive(true);
+                DisableNotifier.Instance.showTextNotifier("Not Enough Coins!");
                 Debug.Log("Not Engough Coins!");
             }
         }
@@ -281,6 +294,8 @@ public class ShopUIManager : MonoBehaviour
         }
         else
         {
+            DisableNotifier.Instance.gameObject.SetActive(true);
+            DisableNotifier.Instance.showTextNotifier("Not Enough Coins!");
             Debug.Log("Not Enough Coins!");
         }
     }
@@ -314,6 +329,8 @@ public class ShopUIManager : MonoBehaviour
             }
             else
             {
+                DisableNotifier.Instance.gameObject.SetActive(true);
+                DisableNotifier.Instance.showTextNotifier("Not Enough Coins!");
                 Debug.Log("Not Engough Coins!");
             }
         }
@@ -336,6 +353,8 @@ public class ShopUIManager : MonoBehaviour
         }
         else
         {
+            DisableNotifier.Instance.gameObject.SetActive(true);
+            DisableNotifier.Instance.showTextNotifier("Not Enough Coins!");
             Debug.Log("Not Enough Coins!");
         }
     }
@@ -366,6 +385,8 @@ public class ShopUIManager : MonoBehaviour
             }
             else
             {
+                DisableNotifier.Instance.gameObject.SetActive(true);
+                DisableNotifier.Instance.showTextNotifier("Not Enough Coins!");
                 Debug.Log("Not Engough Coins!");
             }
         }
@@ -388,6 +409,9 @@ public class ShopUIManager : MonoBehaviour
         }
         else
         {
+
+            DisableNotifier.Instance.gameObject.SetActive(true);
+            DisableNotifier.Instance.showTextNotifier("Not Enough Coins!");
             Debug.Log("Not Enough Coins!");
         }
     }

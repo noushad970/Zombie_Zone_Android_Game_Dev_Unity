@@ -35,12 +35,17 @@ public class ButtonUIManager : MonoBehaviour
     private void onClickOptionButton()
     {
         UIButtonSoundManager.instance.buttonAudioPlay();
+
+        DisableNotifier.Instance.gameObject.SetActive(true);
+        DisableNotifier.Instance.showTextNotifier("Coming Soon!");
         //homeButtonsSection.SetActive(false);
         // Add logic to open the options menu
     }
     private void onClickProfileButton()
     {
         UIButtonSoundManager.instance.buttonAudioPlay();
+        DisableNotifier.Instance.gameObject.SetActive(true);
+        DisableNotifier.Instance.showTextNotifier("Coming Soon!");
         //homeButtonsSection.SetActive(false);
         // Add logic to open the profile UI
     }
@@ -48,6 +53,8 @@ public class ButtonUIManager : MonoBehaviour
     private void onClickAboutButton()
     {
         UIButtonSoundManager.instance.buttonAudioPlay();
+        DisableNotifier.Instance.gameObject.SetActive(true);
+        DisableNotifier.Instance.showTextNotifier("Coming Soon!");
         //homeButtonsSection.SetActive(false);
         // Add logic to open the about UI
     }
