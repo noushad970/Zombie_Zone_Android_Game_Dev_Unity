@@ -12,7 +12,7 @@ public class InGameCollectionUI : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI totalCoinCollectText, TotalKillText;
     [SerializeField] private GameObject GameCompletePanel;
-
+    [SerializeField] private TextMeshProUGUI missionText;
     public static int totalCoinCollectedinOneGame = 0,totalKillinOneGame=0;
 
     private void Start()
@@ -37,19 +37,31 @@ public class InGameCollectionUI : MonoBehaviour
     {
         totalCoinCollectText.text = totalCoinCollectedinOneGame.ToString(); // Update total coins collected text
         TotalKillText.text = totalKillinOneGame.ToString(); // Update total kills text
-        if (InGameCollectionUI.totalKillinOneGame >= 100)
+        if (totalKillinOneGame >= 40)
         {
-            InGameCollectionUI.totalKillinOneGame = 0; // Reset total kills after showing the panel
-             // Reward player with 1000 coins
-            StartCoroutine(wait2Sec()); // Start coroutine to wait for 2 seconds before showing the game complete panel
+            totalKillinOneGame = 0; // Reset total kills after showing the panel
+                                    //time for boss to spawn
+            BossSpawner.isBossSpawned = true; // Set flag to indicate boss is spawned
         }
-        
+        if (BossSpawner.isBossDefeated)
+        {
+            BossSpawner.isBossDefeated = false; // Reset boss defeated flag
+            StartCoroutine(IsGameCompleted()); // Start coroutine to check if game is completed
+        }
+        if(BossSpawner.isBossSpawnedOnce && !BossSpawner.isBossDefeated)
+        {
+            missionText.text = "Mission: Defeat the Boss"; // Update mission text when boss is spawned
+        }else if (totalKillinOneGame < 40)
+        {
+            missionText.text = "Mission: Kill the zombies"; // Update mission text when total kills reach 40
+        }
+
     }
-    IEnumerator wait2Sec()
+    IEnumerator IsGameCompleted()
     {
         yield return new WaitForSeconds(2f);
         GameCompletePanel.SetActive(true); // Show game complete panel if total kills are 100 or more
-        GameDataManager.AddCoins(1000);
+        
     }
     private void OnEnable()
     {

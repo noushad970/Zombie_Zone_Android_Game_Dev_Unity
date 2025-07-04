@@ -53,7 +53,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth -= damage; // Reduce current health by damage amount
         if (currentHealth <= 0)
         {
-            Die(); // Call Die method if health is zero or below
+            Die(); // Call DieZombie method if health is zero or below
              }
             Debug.Log("Current Health: " + currentHealth); // Log current health
     }

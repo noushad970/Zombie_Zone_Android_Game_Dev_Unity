@@ -1,10 +1,10 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class IntroShow : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    [SerializeField] private GameObject menuPanel;
+  
     void Start()
     {
         StartCoroutine(wait5SecForIntro());
@@ -12,9 +12,7 @@ public class IntroShow : MonoBehaviour
 
     IEnumerator wait5SecForIntro()
     {
-        menuPanel.SetActive(false);
-        yield return new WaitForSeconds(5f);
-        gameObject.SetActive(false);
-        menuPanel.SetActive(true);
+        yield return new WaitForSeconds(4f);
+        SceneManager.LoadScene("Gameplay"); // Load the main menu scene
     }
 }

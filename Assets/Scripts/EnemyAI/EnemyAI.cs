@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -11,9 +11,11 @@ public class EnemyAI : MonoBehaviour
     public float attackInterval = 1f; // Time between attacks
     public int attackDamage = 10; // Damage to deal to the player
 
-    private Animator anim;
+    public Animator anim;
     private bool isAttacking = false;
     public ParticleSystem bloodParticle;
+    public Transform rayOriginReference; // Optional reference for raycast origin
+    public ParticleSystem bossAttackPracticle;
     void Awake()
     {
         stopWalkAudio = false;
@@ -24,7 +26,10 @@ public class EnemyAI : MonoBehaviour
         }
         anim = GetComponent<Animator>();
     }
+    private void Start()
+    {
 
+    }
     void Update()
     {
 
@@ -66,8 +71,10 @@ public class EnemyAI : MonoBehaviour
             // Idle State
             anim.SetBool("isMoving", false);
         }
-        if(!stopWalkAudio) 
-        AudioManager.instance.zombieWalkPlay();
+        if(!stopWalkAudio && BossSpawner.isBossSpawnedOnce) 
+        AudioManager.instance.bossButcherWalkPlay();
+        if (!stopWalkAudio && !BossSpawner.isBossSpawnedOnce)
+            AudioManager.instance.zombieWalkPlay();
         else
         {
             AudioManager.instance.zombieWalk.Stop();
@@ -98,38 +105,132 @@ public class EnemyAI : MonoBehaviour
     public LayerMask targetLayer; // Layer to detect objects (set Player's layer here)
 
     private float nextRaycastTime = 0f; // Time for the next raycast
-
-
-
+    private Vector2 rayOrigins, directions;
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(rayOrigins, rayOrigins + directions * 2);
+    }
+    /*
     void PerformRaycast()
     {
+        // Horizontal facing: right if scale.x > 0, otherwise left
         Vector2 direction = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
-        Vector2 rayOrigin = (Vector2)transform.position + direction * 0.1f;
 
+        // ───── NEW ORIGIN ─────
+        // Start the ray 2 units above the object, so it comes from higher up on the Y‑axis
+        Vector2 rayOrigin = (Vector2)transform.position + Vector2.up * 1f;
+        rayOrigins = rayOrigin;
+        directions = direction;
+        // Raycast
         RaycastHit2D hit = Physics2D.Raycast(rayOrigin, direction, raycastRange, targetLayer);
 
+        // Optional: visualize in Play mode
+        Debug.DrawLine(rayOrigin, rayOrigin + direction * raycastRange, Color.red, 0f, false);
+
+        // Animation
         if (!died)
             anim.Play("attack");
 
-
+        // Hit logic
         if (hit.collider != null && hit.collider.CompareTag("Player"))
         {
-            StartCoroutine(shakeDelay());
+            StartCoroutine(ShakeDelayWithPlayerDamage());
             AudioManager.instance.BitePlay();
-
         }
         else
         {
             Debug.Log("No Player detected.");
         }
+    }*/
+    void PerformRaycast()
+    {
+        // 1. Horizontal direction (right if scale.x > 0, else left)
+        Vector2 direction = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
+
+        // 2. Choose origin: reference object if set, otherwise this transform
+        Vector2 origin = rayOriginReference != null
+                         ? (Vector2)rayOriginReference.position
+                         : (Vector2)transform.position;
+
+        //    Optional vertical offset (1 unit up); tweak or remove as needed
+        origin += Vector2.up * 1f;
+
+        // 3. Store for debugging
+        rayOrigins = origin;
+        directions = direction;
+
+        // 4. Cast the ray
+        RaycastHit2D hit = Physics2D.Raycast(origin, direction, raycastRange, targetLayer);
+
+        // 5. Visualize
+        Debug.DrawLine(origin, origin + direction * raycastRange, Color.red, 0f, false);
+
+        // 6. Anim & logic
+        if (!died && BossSpawner.isBossSpawnedOnce)
+        {
+            anim.Play("attack");
+            StartCoroutine(playBossAttackParticle()); // Play particle effect after a delay
+        }
+        else if (!died && !BossSpawner.isBossSpawnedOnce)
+        {
+            anim.Play("attack");
+        }
+
+        if (hit.collider != null && hit.collider.CompareTag("Player") && BossSpawner.isBossSpawnedOnce && !PlayerMovement.isJumping)
+        {
+            StartCoroutine(ShakeDelayWithPlayerDamageByBoss());
+            AudioManager.instance.BossButcherAttackPlay();
+        }
+        else if (hit.collider != null && hit.collider.CompareTag("Player") && !BossSpawner.isBossSpawnedOnce && !PlayerMovement.isJumping)
+        {
+            StartCoroutine(ShakeDelayWithPlayerDamage());
+            AudioManager.instance.BitePlay();
+        }
+        else if(BossSpawner.isBossSpawnedOnce)
+        {
+            AudioManager.instance.BossButcherAttackPlay();
+            Debug.Log("No Player detected.");
+        }
+        else
+        {
+            AudioManager.instance.BitePlay();
+            Debug.Log("No Player detected.");
+        }
+    }
+    IEnumerator playBossAttackParticle()
+    {
+        yield return new WaitForSeconds(0.3f);
+        if(bossAttackPracticle != null) 
+        bossAttackPracticle.Play();
     }
 
-    IEnumerator shakeDelay()
+    IEnumerator ShakeDelayWithPlayerDamage()
     {
         yield return new WaitForSeconds(0.2f);
-        
-        CameraFollow.instance.shakeDuration = .3f;
-        player.GetComponent<PlayerHealth>().TakeDamage(10);
+        if (PlayerMovement.isPressingShieldButton)
+        {
+            player.GetComponent<PlayerHealth>().TakeDamage(2);
+        }
+        else
+        {
+            CameraFollow.instance.shakeDuration = .5f;
+            player.GetComponent<PlayerHealth>().TakeDamage(10);
+        }
+    }
+    IEnumerator ShakeDelayWithPlayerDamageByBoss()
+    {
+        yield return new WaitForSeconds(0.2f);
+        if (PlayerMovement.isPressingShieldButton)
+        {
+            CameraFollow.instance.shakeDuration = 0.5f;
+            player.GetComponent<PlayerHealth>().TakeDamage(10);
+        }
+        else
+        {
+            CameraFollow.instance.shakeDuration = 1f;
+            player.GetComponent<PlayerHealth>().TakeDamage(25);
+        }
     }
     IEnumerator BloodDelay()
     {
@@ -144,13 +245,16 @@ public class EnemyAI : MonoBehaviour
         nextRaycastTime = Time.time + raycastInterval;
         anim.Play("hurt");
         StartCoroutine(BloodDelay());
-        if (health <= 0)
+        if (health <= 0 && BossSpawner.isBossSpawnedOnce)
         {
-            Die();
+            DieBoss();
+        }else if (health <= 0 && !BossSpawner.isBossSpawnedOnce)
+        {
+            DieZombie();
         }
     }
     bool stopWalkAudio;
-    void Die()
+    void DieZombie()
     {
         anim.Play("died");
         died =true;
@@ -166,5 +270,29 @@ public class EnemyAI : MonoBehaviour
         gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
         isAttacking = false;
         Destroy(gameObject,3); // Destroy the zombie
+    }
+    void DieBoss()
+    {
+        anim.Play("died");
+        died = true;
+        Debug.Log("Boss died!");
+        int randomCoins = 1000; // Random coins between 3 and 8
+        InGameCollectionUI.totalCoinCollectedinOneGame += 1000; // Increment total coins to 1000 for boss kill
+        InGameCollectionUI.totalKillinOneGame += 1; // Increment total kills
+        GameDataManager.AddCoins(randomCoins);
+        StartCoroutine(waitForBossToDie()); // Wait for boss to die
+        GameDataManager.AddZombieKill(1);
+        gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        stopWalkAudio = true;
+        AudioManager.instance.BossButcherDiePlay();
+        gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+        isAttacking = false;
+        Destroy(gameObject, 3); // Destroy the zombie
+    }
+    IEnumerator waitForBossToDie()
+    {
+        yield return new WaitForSeconds(2.5f);
+        BossSpawner.isBossDefeated = true; // Set the flag to indicate the boss is defeated
+        BossSpawner.isBossSpawnedOnce = false; // Reset the flag for boss spawn
     }
 }

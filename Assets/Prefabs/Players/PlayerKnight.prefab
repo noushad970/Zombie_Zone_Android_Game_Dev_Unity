@@ -306,7 +306,7 @@ MonoBehaviour:
   anim: {fileID: 964781739963006492}
   jumpAnimDelay: 0.8
   isAttack: 0
-  attackAnimDelay: 0.8
+  attackAnimDelay: 1.5
   leftButton: {fileID: 0}
   rightButton: {fileID: 0}
   jumpButton: {fileID: 0}

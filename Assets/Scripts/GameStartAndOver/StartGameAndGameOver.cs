@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class StartGameAndGameOver : MonoBehaviour
 {
     [SerializeField] private GameObject[] players;
@@ -10,6 +10,7 @@ public class StartGameAndGameOver : MonoBehaviour
     private Vector3 playerPosAtStart;
     [SerializeField] private Button startButton,mainMenuButton;
     [SerializeField] private GameObject gameOverPanel;
+    
     private void Start()
     {
         startButton.onClick.AddListener(startGame);
@@ -105,6 +106,7 @@ public class StartGameAndGameOver : MonoBehaviour
         //gameOver UI
         yield return new WaitForSeconds(1f); // Wait for 1 second before showing game over panel
         gameOverPanel.SetActive(true);
+        SceneManager.LoadScene("Gameplay"); // Load the main menu scene
     }
     void goToMainMenu()
     {
@@ -125,6 +127,7 @@ public class StartGameAndGameOver : MonoBehaviour
 
         loadingPanel.SetActive(false);
         MenuPanel.SetActive(true);
+        SceneManager.LoadScene("Gameplay"); // Load the main menu scene
 
     }
     void disablePlayerAndMap()

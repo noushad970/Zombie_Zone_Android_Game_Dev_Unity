@@ -205,6 +205,7 @@ Transform:
   - {fileID: 3153267974368172243}
   - {fileID: 2598291075220967249}
   - {fileID: 8090515563452389063}
+  - {fileID: 5830768553743836089}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &823182588015957731
@@ -247,7 +248,10 @@ MonoBehaviour:
   moveSpeed: 2
   attackInterval: 0.7
   attackDamage: 4
+  anim: {fileID: 823182588015957731}
   bloodParticle: {fileID: 2958149023093492867}
+  rayOriginReference: {fileID: 5830768553743836089}
+  bossAttackPracticle: {fileID: 0}
   clickCooldown: 1
   raycastRange: 2
   targetLayer:
@@ -288,7 +292,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0, y: -0.17}
+  m_Offset: {x: -0, y: -0.21}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -454,6 +458,37 @@ Transform:
   m_Children:
   - {fileID: 7486464010497484868}
   m_Father: {fileID: 3060542717119026255}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3100992783550512761
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5830768553743836089}
+  m_Layer: 10
+  m_Name: AttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5830768553743836089
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3100992783550512761}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.17, y: -1.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1911716319948788645}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3155110990042250519
 GameObject:

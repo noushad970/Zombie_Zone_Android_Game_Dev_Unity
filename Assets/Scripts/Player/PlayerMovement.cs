@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jump System")]
     bool jump = false;
     bool playingJumpingAnimation;
+    public static bool isJumping,isPressingShieldButton;
     [SerializeField] private float jumpAnimDelay;
     [Header("Attack System")]
     [HideInInspector]
@@ -20,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float attackAnimDelay;
 
     [Header("Player UI Buttons")]
-    [SerializeField] private UIButtonStateTracker leftButton, rightButton, jumpButton, attackButton,boostButton;
+    [SerializeField] private UIButtonStateTracker leftButton, rightButton, jumpButton, attackButton,boostButton,shieldButton;
 
     [SerializeField] private AudioSource attackAudio, JumpAudio, walkAudio, RunAudio;
     private void Start()
@@ -38,8 +39,7 @@ public class PlayerMovement : MonoBehaviour
         }
         AttackSystem();
         walkAndRunSound();
-        //Debug.Log("playingJumpingAnimation: " + playingJumpingAnimation);
-
+        isJumping = playingJumpingAnimation;
         if (leftButton.isPressed)
         {
 
@@ -58,6 +58,16 @@ public class PlayerMovement : MonoBehaviour
                 walkAudio.Stop();
             }
             inputHorizontalMove = 0f;
+        }
+        if (shieldButton.isPressed)
+        {
+            isPressingShieldButton = true;
+            anim.Play("shield");
+        }
+        else
+        {
+            isPressingShieldButton = false;
+            anim.Play("shield");
         }
 
     }
@@ -96,7 +106,7 @@ public class PlayerMovement : MonoBehaviour
     private void jumpSystem()
     {
         //Input.GetButtonDown("Jump") &&
-        if (jumpButton.isPressed && !isAttack)
+        if (jumpButton.isPressed && !isAttack && !isPressingShieldButton)
         {
 
             if (!playingJumpingAnimation)
@@ -133,7 +143,7 @@ public class PlayerMovement : MonoBehaviour
 
         ///other
         //Input.GetKey(KeyCode.RightShift)
-        if (boostButton.isPressed)
+        if (boostButton.isPressed && !isPressingShieldButton)
         {
             runSpeed = 40f;
             
@@ -143,12 +153,12 @@ public class PlayerMovement : MonoBehaviour
             
             runSpeed = 10f;
         }
-        if (horizontalMove != 0 && runSpeed == 10 && playingJumpingAnimation == false)
+        if (horizontalMove != 0 && runSpeed == 10 && playingJumpingAnimation == false && !isPressingShieldButton)
         {
             
             anim.SetFloat("Speed", 0.5f);
         }
-        else if (horizontalMove != 0 && runSpeed == 40 && playingJumpingAnimation == false)
+        else if (horizontalMove != 0 && runSpeed == 40 && playingJumpingAnimation == false && !isPressingShieldButton)
         {
             anim.SetFloat("Speed", 1.4f); 
            
@@ -157,16 +167,16 @@ public class PlayerMovement : MonoBehaviour
         {
             anim.SetFloat("Speed", 0f);
         }
-
+        
         
     }
     private void AttackSystem()
     {
         //Input.GetMouseButtonDown(0) &&
-        if ( attackButton.isPressed && !isAttack)
+        if ( attackButton.isPressed && !isAttack && !isPressingShieldButton)
         {
             isAttack = true; 
-            if(!attackAudio.isPlaying || attackAudio != null)
+            if(!attackAudio.isPlaying && attackAudio != null)
             {
                 attackAudio.Play();
             }
@@ -189,7 +199,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator DetectNearbyZombies()
     {
         yield return new WaitForSeconds(0.3f);
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 2.5f);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 2.5f);//here 2.5f is the radius of the circle to detect nearby zombies
         int count = 1;
         foreach (Collider2D hit in hits)
         {
@@ -198,7 +208,16 @@ public class PlayerMovement : MonoBehaviour
                 Debug.Log($"Detected object with tag : {hit.name}");
                 count++;
                 // Add your logic here (e.g., damage, interact)
-                hit.GetComponent<EnemyAI>().TakeDamage(100);
+                hit.GetComponent<EnemyAI>().TakeDamage(50);
+            }
+            if (hit.CompareTag("Butcher") && count == 1)
+            {
+                Debug.Log($"Detected object with tag : {hit.name}");
+                count++;
+                // Add your logic here (e.g., damage, interact)
+                AudioManager.instance.BossButcherHurtPlay();
+                hit.GetComponent<EnemyAI>().TakeDamage(50);
+                CameraFollow.instance.shakeDuration = .3f;
             }
         }
     }

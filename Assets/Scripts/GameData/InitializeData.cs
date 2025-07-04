@@ -16,7 +16,6 @@ public class InitializeData : MonoBehaviour
         GameDataManager.UnlockMapByName(allMapDetails.allMaps[1].mapName.ToString());
         GameDataManager.SaveGameData();
         GameDataManager.LoadGameData();
-
     }
 
     // Update is called once per frame
