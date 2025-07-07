@@ -243,7 +243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  detectionRange: 20
+  detectionRange: 30
   attackRange: 1.4
   moveSpeed: 2
   attackInterval: 0.7
@@ -252,7 +252,6 @@ MonoBehaviour:
   bloodParticle: {fileID: 2958149023093492867}
   rayOriginReference: {fileID: 5830768553743836089}
   bossAttackPracticle: {fileID: 0}
-  clickCooldown: 1
   raycastRange: 2
   targetLayer:
     serializedVersion: 2

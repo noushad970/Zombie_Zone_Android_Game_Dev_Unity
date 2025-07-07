@@ -5078,6 +5078,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3885990458461570606}
   m_LocalEulerAnglesHint: {x: -0.2874, y: -90, z: 90}
+--- !u!1 &4845320150580807920
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6041532043521924342}
+  m_Layer: 10
+  m_Name: ReferenceTag
+  m_TagString: Girl2
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6041532043521924342
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4845320150580807920}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9103459559536210060}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4989985726149369731
 GameObject:
   m_ObjectHideFlags: 0
@@ -5596,7 +5627,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9103459559536210060
 Transform:
   m_ObjectHideFlags: 0
@@ -5618,6 +5649,7 @@ Transform:
   - {fileID: 3398648389693886680}
   - {fileID: 625147169768265556}
   - {fileID: 8430297207177259773}
+  - {fileID: 6041532043521924342}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &5991373280323099913
@@ -5782,7 +5814,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 73392841352095398}
+  referenceForTag: {fileID: 4845320150580807920}
   runSpeed: 40
+  attackDelayVal: 1
+  jumpDelayVal: 0.5
   anim: {fileID: 8102635524518073723}
   jumpAnimDelay: 0.8
   isAttack: 0
@@ -5792,10 +5827,22 @@ MonoBehaviour:
   jumpButton: {fileID: 0}
   attackButton: {fileID: 0}
   boostButton: {fileID: 0}
+  shieldButton: {fileID: 0}
   attackAudio: {fileID: 8460944328766986510}
   JumpAudio: {fileID: 5361524604166071398}
   walkAudio: {fileID: 4876452574391018392}
   RunAudio: {fileID: 3606434297085348057}
+  shootPoint: {fileID: 0}
+  arrowPrefab: {fileID: 0}
+  shootForce: 12
+  bulletPrefab: {fileID: 0}
+  shootPointBullet: {fileID: 0}
+  bulletSpeed: 15
+  shellRemoveParticle: {fileID: 0}
+  spellPrefab: {fileID: 1512944251495975143, guid: e7f17b3b6de2a084b83849c848afc552,
+    type: 3}
+  shootPointSpell: {fileID: 2979033238384116586}
+  spellSpeed: 15
 --- !u!114 &2170103030719504036
 MonoBehaviour:
   m_ObjectHideFlags: 0

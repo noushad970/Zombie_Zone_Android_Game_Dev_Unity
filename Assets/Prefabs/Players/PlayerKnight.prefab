@@ -116,7 +116,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6368068270243342166
 Transform:
   m_ObjectHideFlags: 0
@@ -138,6 +138,7 @@ Transform:
   - {fileID: 4614155516902429367}
   - {fileID: 8704286060807673546}
   - {fileID: 6596514502169821487}
+  - {fileID: 6411540944414406585}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &389426617960068825
@@ -302,20 +303,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 1590118179375295276}
+  referenceForTag: {fileID: 2532923199697329171}
   runSpeed: 40
+  attackDelayVal: 1
+  jumpDelayVal: 0.5
   anim: {fileID: 964781739963006492}
   jumpAnimDelay: 0.8
   isAttack: 0
-  attackAnimDelay: 1.5
+  attackAnimDelay: 0.8
   leftButton: {fileID: 0}
   rightButton: {fileID: 0}
   jumpButton: {fileID: 0}
   attackButton: {fileID: 0}
   boostButton: {fileID: 0}
+  shieldButton: {fileID: 0}
   attackAudio: {fileID: 7779983127582167113}
   JumpAudio: {fileID: 4043516656931586602}
   walkAudio: {fileID: 206375966890723702}
   RunAudio: {fileID: 4955387573832780014}
+  shootPoint: {fileID: 0}
+  arrowPrefab: {fileID: 0}
+  shootForce: 12
+  bulletPrefab: {fileID: 0}
+  shootPointBullet: {fileID: 0}
+  bulletSpeed: 15
+  shellRemoveParticle: {fileID: 0}
+  spellPrefab: {fileID: 0}
+  shootPointSpell: {fileID: 0}
+  spellSpeed: 15
 --- !u!114 &4833020972517761609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5556,6 +5571,37 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &2532923199697329171
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6411540944414406585}
+  m_Layer: 10
+  m_Name: ReferenceTag
+  m_TagString: Knight
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6411540944414406585
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2532923199697329171}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6368068270243342166}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2646697044196441258
 GameObject:
   m_ObjectHideFlags: 0
@@ -5873,7 +5919,7 @@ MonoBehaviour:
   offset: {x: 0, y: 3.06, z: -45}
   smoothSpeed: 10
   minBounds: {x: -1.29, y: -30}
-  maxBounds: {x: 85.6, y: 30}
+  maxBounds: {x: 140, y: 30}
   shakeDuration: 0
   shakeMagnitude: 0.2
 --- !u!1 &7832560712072484277

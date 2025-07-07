@@ -99,7 +99,6 @@ public class EnemyAI : MonoBehaviour
             transform.localScale = new Vector3(-1, 1, 1);
     }
 
-    public float clickCooldown = 1f; // Delay between clicks
     public float raycastRange = 10f; // Range of the raycast
      float raycastInterval = 4f; // Interval between raycasts
     public LayerMask targetLayer; // Layer to detect objects (set Player's layer here)
@@ -111,38 +110,6 @@ public class EnemyAI : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawLine(rayOrigins, rayOrigins + directions * 2);
     }
-    /*
-    void PerformRaycast()
-    {
-        // Horizontal facing: right if scale.x > 0, otherwise left
-        Vector2 direction = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
-
-        // ───── NEW ORIGIN ─────
-        // Start the ray 2 units above the object, so it comes from higher up on the Y‑axis
-        Vector2 rayOrigin = (Vector2)transform.position + Vector2.up * 1f;
-        rayOrigins = rayOrigin;
-        directions = direction;
-        // Raycast
-        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, direction, raycastRange, targetLayer);
-
-        // Optional: visualize in Play mode
-        Debug.DrawLine(rayOrigin, rayOrigin + direction * raycastRange, Color.red, 0f, false);
-
-        // Animation
-        if (!died)
-            anim.Play("attack");
-
-        // Hit logic
-        if (hit.collider != null && hit.collider.CompareTag("Player"))
-        {
-            StartCoroutine(ShakeDelayWithPlayerDamage());
-            AudioManager.instance.BitePlay();
-        }
-        else
-        {
-            Debug.Log("No Player detected.");
-        }
-    }*/
     void PerformRaycast()
     {
         // 1. Horizontal direction (right if scale.x > 0, else left)
@@ -245,6 +212,7 @@ public class EnemyAI : MonoBehaviour
         nextRaycastTime = Time.time + raycastInterval;
         anim.Play("hurt");
         StartCoroutine(BloodDelay());
+        
         if (health <= 0 && BossSpawner.isBossSpawnedOnce)
         {
             DieBoss();
@@ -288,6 +256,12 @@ public class EnemyAI : MonoBehaviour
         gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
         isAttacking = false;
         Destroy(gameObject, 3); // Destroy the zombie
+    }
+    IEnumerator stopBossForAwhile()
+    {
+        gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+        yield return new WaitForSeconds(1f);
+        gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
     }
     IEnumerator waitForBossToDie()
     {

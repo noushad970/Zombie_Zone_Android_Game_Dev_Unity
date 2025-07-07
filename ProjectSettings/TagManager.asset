@@ -7,6 +7,13 @@ TagManager:
   - Interactible
   - Zombie
   - Butcher
+  - Archer
+  - Knight
+  - Girl1
+  - Girl2
+  - Robot1
+  - Pirate
+  - Ground
   layers:
   - Default
   - TransparentFX

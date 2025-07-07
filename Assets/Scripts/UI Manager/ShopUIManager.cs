@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ShopUIManager : MonoBehaviour
 {
-    [SerializeField] private PlayerObject allPlayerDetails;
+    //[SerializeField] private PlayerObject allPlayerDetails;
     [Header("UI Refs")]
     private int[] priceOfPlayers;
     [SerializeField] private Button[] buyPlayersButton;
@@ -37,7 +37,6 @@ public class ShopUIManager : MonoBehaviour
         buyPlayersButton[4].onClick.AddListener(onClickPlayer4);
         buyPlayersButton[5].onClick.AddListener(onClickPlayer5);
 
-
         selectCharButton[0].onClick.AddListener(onClickPlayer0);
         selectCharButton[1].onClick.AddListener(onClickPlayer1);
         selectCharButton[2].onClick.AddListener(onClickPlayer2);
@@ -58,45 +57,55 @@ public class ShopUIManager : MonoBehaviour
         NoButtonsButton[5].onClick.AddListener(onClickNoButton5);
 
         backButton.onClick.AddListener(onClickBackButton);
-
-
     }
+
     private IEnumerator initializeAllAfter1Sec()
     {
         yield return new WaitForSeconds(1f);
-        priceOfPlayers = new int[allPlayerDetails.allPlayersDetails.Count];
+        priceOfPlayers = new int[6]; // Fixed to 6 players based on previous data
         initializePrices();
         initializePlayerPriceUI();
         initializePlayerEnableOrDisableUI();
         disableYesNoSections();
         initializeLastSelectPlayer();
     }
+
     private void initializeLastSelectPlayer()
     {
         DisableSelection();
         int lastSelectedPlayerIndex = GameDataManager.GetSelectedPlayer();
-        isSelected[lastSelectedPlayerIndex].SetActive(true);
-        NotSelected[lastSelectedPlayerIndex].SetActive(false);
-    }
-    void initializePrices()
-    {
-        for (int i = 0; i < allPlayerDetails.allPlayersDetails.Count; i++)
+        if (lastSelectedPlayerIndex >= 0 && lastSelectedPlayerIndex < 6)
         {
-            priceOfPlayers[i] = allPlayerDetails.allPlayersDetails[i].playerPrice;
+            isSelected[lastSelectedPlayerIndex].SetActive(true);
+            NotSelected[lastSelectedPlayerIndex].SetActive(false);
         }
     }
+
+    void initializePrices()
+    {
+        // Hardcoded prices based on previous data (e.g., 0, 1000, 1000, 2000, 2000, 4000)
+        priceOfPlayers[0] = 0;   // Axel
+        priceOfPlayers[1] = 1000; // Ryder
+        priceOfPlayers[2] = 1000; // Zane
+        priceOfPlayers[3] = 2000; // Kairo
+        priceOfPlayers[4] = 2000; // Draven
+        priceOfPlayers[5] = 4000; // Orion
+    }
+
     private void initializePlayerPriceUI()
     {
-        for (int i = 0; i < allPlayerDetails.allPlayersDetails.Count; i++)
+        for (int i = 0; i < 6; i++)
         {
             playerPriceText[i].text = priceOfPlayers[i].ToString();
         }
     }
+
     private void initializePlayerEnableOrDisableUI()
     {
-        for(int i = 0; i < allPlayerDetails.allPlayersDetails.Count; i++)
+        for (int i = 0; i < 6; i++)
         {
-            if( allPlayerDetails.allPlayersDetails[i].isPlayerBuyed)
+            string playerName = GetPlayerNameByIndex(i);
+            if (GameDataManager.IsPlayerUnlocked(playerName))
             {
                 isBuyedObject[i].SetActive(true);
                 NotBuyedObject[i].SetActive(false);
@@ -110,14 +119,16 @@ public class ShopUIManager : MonoBehaviour
             }
         }
     }
+
     private void DisableSelection()
     {
-        for (int i = 0; i < allPlayerDetails.allPlayersDetails.Count; i++)
+        for (int i = 0; i < 6; i++)
         {
             isSelected[i].SetActive(false);
             NotSelected[i].SetActive(true);
         }
     }
+
     private void disableYesNoSections()
     {
         for (int i = 0; i < areYouSureSection.Length; i++)
@@ -126,61 +137,67 @@ public class ShopUIManager : MonoBehaviour
             areYouSureSectionMain.SetActive(false);
         }
     }
+
+    private string GetPlayerNameByIndex(int index)
+    {
+        string[] playerNames = { "Axel", "Ryder", "Zane", "Kairo", "Draven", "Orion" };
+        return index >= 0 && index < playerNames.Length ? playerNames[index] : "";
+    }
+
     private void onClickPlayer0()
     {
         UIButtonSoundManager.instance.buttonAudioPlay();
-        if (allPlayerDetails.allPlayersDetails[0].isPlayerBuyed)
+        if (GameDataManager.IsPlayerUnlocked("Axel"))
         {
             DisableSelection();
-            GameDataManager.SetSelectedPlayer(0); // Set the selected player index
+            GameDataManager.SetSelectedPlayer(0);
             isSelected[0].SetActive(true);
             NotSelected[0].SetActive(false);
         }
         else
         {
             DisableNotifier.Instance.gameObject.SetActive(true);
-            DisableNotifier.Instance.showTextNotifier("Player not buyed yet!");
-            Debug.Log("Player not buyed yet!");
+            DisableNotifier.Instance.showTextNotifier("Player not bought yet!");
+            Debug.Log("Player not bought yet!");
         }
     }
+
     private void onClickPlayer1()
     {
         UIButtonSoundManager.instance.buttonAudioPlay();
-        if (allPlayerDetails.allPlayersDetails[1].isPlayerBuyed)
+        if (GameDataManager.IsPlayerUnlocked("Ryder"))
         {
             DisableSelection();
-            GameDataManager.SetSelectedPlayer(1); // Set the selected player index
+            GameDataManager.SetSelectedPlayer(1);
             isSelected[1].SetActive(true);
             NotSelected[1].SetActive(false);
         }
         else
         {
-            if (GameDataManager.GetCoins()>= allPlayerDetails.allPlayersDetails[1].playerPrice)
+            if (GameDataManager.GetCoins() >= priceOfPlayers[1])
             {
                 areYouSureSection[1].SetActive(true);
-
                 areYouSureSectionMain.SetActive(true);
             }
             else
             {
-
                 DisableNotifier.Instance.gameObject.SetActive(true);
                 DisableNotifier.Instance.showTextNotifier("Not Enough Coins!");
-                Debug.Log("Not Engough Coins!");
+                Debug.Log("Not Enough Coins!");
             }
         }
     }
+
     private void onClickYesButton1()
     {
         UIButtonSoundManager.instance.buttonAudioPlay();
-        if (GameDataManager.GetCoins() >= allPlayerDetails.allPlayersDetails[1].playerPrice)
+        if (GameDataManager.GetCoins() >= priceOfPlayers[1])
         {
-            GameDataManager.AddCoins(-allPlayerDetails.allPlayersDetails[1].playerPrice);
-            allPlayerDetails.allPlayersDetails[1].isPlayerBuyed = true;
+            GameDataManager.AddCoins(-priceOfPlayers[1]);
+            GameDataManager.UnlockPlayerByName("Ryder");
             initializePlayerEnableOrDisableUI();
-            GameDataManager.IsPlayerUnlocked(allPlayerDetails.allPlayersDetails[1].playerName);
+            GameDataManager.SetSelectedPlayer(1);
             onClickPlayer1(); // Refresh selection
-            GameDataManager.SetSelectedPlayer(1); // Set the selected player index
             areYouSureSection[1].SetActive(false);
             areYouSureSectionMain.SetActive(false);
             UIButtonSoundManager.instance.purchaseAudioPlay();
@@ -192,25 +209,27 @@ public class ShopUIManager : MonoBehaviour
             Debug.Log("Not Enough Coins!");
         }
     }
+
     private void onClickNoButton1()
     {
         UIButtonSoundManager.instance.buttonAudioPlay();
         areYouSureSection[1].SetActive(false);
         areYouSureSectionMain.SetActive(false);
     }
+
     private void onClickPlayer2()
     {
         UIButtonSoundManager.instance.buttonAudioPlay();
-        if (allPlayerDetails.allPlayersDetails[2].isPlayerBuyed)
+        if (GameDataManager.IsPlayerUnlocked("Zane"))
         {
             DisableSelection();
-            GameDataManager.SetSelectedPlayer(2); // Set the selected player index
+            GameDataManager.SetSelectedPlayer(2);
             isSelected[2].SetActive(true);
             NotSelected[2].SetActive(false);
         }
         else
         {
-            if (GameDataManager.GetCoins() >= allPlayerDetails.allPlayersDetails[2].playerPrice)
+            if (GameDataManager.GetCoins() >= priceOfPlayers[2])
             {
                 areYouSureSection[2].SetActive(true);
                 areYouSureSectionMain.SetActive(true);
@@ -219,20 +238,20 @@ public class ShopUIManager : MonoBehaviour
             {
                 DisableNotifier.Instance.gameObject.SetActive(true);
                 DisableNotifier.Instance.showTextNotifier("Not Enough Coins!");
-                Debug.Log("Not Engough Coins!");
+                Debug.Log("Not Enough Coins!");
             }
         }
     }
+
     private void onClickYesButton2()
     {
         UIButtonSoundManager.instance.buttonAudioPlay();
-        if (GameDataManager.GetCoins() >= allPlayerDetails.allPlayersDetails[2].playerPrice)
+        if (GameDataManager.GetCoins() >= priceOfPlayers[2])
         {
-            GameDataManager.AddCoins(-allPlayerDetails.allPlayersDetails[2].playerPrice);
-            allPlayerDetails.allPlayersDetails[2].isPlayerBuyed = true;
+            GameDataManager.AddCoins(-priceOfPlayers[2]);
+            GameDataManager.UnlockPlayerByName("Zane");
             initializePlayerEnableOrDisableUI();
-            GameDataManager.SetSelectedPlayer(2); // Set the selected player index
-            GameDataManager.IsPlayerUnlocked(allPlayerDetails.allPlayersDetails[2].playerName);
+            GameDataManager.SetSelectedPlayer(2);
             onClickPlayer1(); // Refresh selection
             areYouSureSection[2].SetActive(false);
             areYouSureSectionMain.SetActive(false);
@@ -245,25 +264,27 @@ public class ShopUIManager : MonoBehaviour
             Debug.Log("Not Enough Coins!");
         }
     }
+
     private void onClickNoButton2()
     {
         UIButtonSoundManager.instance.buttonAudioPlay();
         areYouSureSection[2].SetActive(false);
         areYouSureSectionMain.SetActive(false);
     }
+
     private void onClickPlayer3()
     {
         UIButtonSoundManager.instance.buttonAudioPlay();
-        if (allPlayerDetails.allPlayersDetails[3].isPlayerBuyed)
+        if (GameDataManager.IsPlayerUnlocked("Kairo"))
         {
             DisableSelection();
-            GameDataManager.SetSelectedPlayer(3); // Set the selected player index
+            GameDataManager.SetSelectedPlayer(3);
             isSelected[3].SetActive(true);
             NotSelected[3].SetActive(false);
         }
         else
         {
-           if( GameDataManager.GetCoins() >= allPlayerDetails.allPlayersDetails[3].playerPrice)
+            if (GameDataManager.GetCoins() >= priceOfPlayers[3])
             {
                 areYouSureSection[3].SetActive(true);
                 areYouSureSectionMain.SetActive(true);
@@ -272,21 +293,20 @@ public class ShopUIManager : MonoBehaviour
             {
                 DisableNotifier.Instance.gameObject.SetActive(true);
                 DisableNotifier.Instance.showTextNotifier("Not Enough Coins!");
-                Debug.Log("Not Engough Coins!");
+                Debug.Log("Not Enough Coins!");
             }
         }
     }
+
     private void onClickYesButton3()
     {
         UIButtonSoundManager.instance.buttonAudioPlay();
-
-        if (GameDataManager.GetCoins() >= allPlayerDetails.allPlayersDetails[3].playerPrice)
+        if (GameDataManager.GetCoins() >= priceOfPlayers[3])
         {
-            GameDataManager.AddCoins(-allPlayerDetails.allPlayersDetails[3].playerPrice);
-            allPlayerDetails.allPlayersDetails[3].isPlayerBuyed = true;
+            GameDataManager.AddCoins(-priceOfPlayers[3]);
+            GameDataManager.UnlockPlayerByName("Kairo");
             initializePlayerEnableOrDisableUI();
-            GameDataManager.SetSelectedPlayer(3); // Set the selected player index
-            GameDataManager.IsPlayerUnlocked(allPlayerDetails.allPlayersDetails[3].playerName);
+            GameDataManager.SetSelectedPlayer(3);
             onClickPlayer1(); // Refresh selection
             areYouSureSection[3].SetActive(false);
             areYouSureSectionMain.SetActive(false);
@@ -299,30 +319,27 @@ public class ShopUIManager : MonoBehaviour
             Debug.Log("Not Enough Coins!");
         }
     }
+
     private void onClickNoButton3()
     {
         UIButtonSoundManager.instance.buttonAudioPlay();
-
         areYouSureSection[3].SetActive(false);
         areYouSureSectionMain.SetActive(false);
     }
 
-
-
     private void onClickPlayer4()
     {
         UIButtonSoundManager.instance.buttonAudioPlay();
-
-        if (allPlayerDetails.allPlayersDetails[4].isPlayerBuyed)
+        if (GameDataManager.IsPlayerUnlocked("Draven"))
         {
             DisableSelection();
+            GameDataManager.SetSelectedPlayer(4);
             isSelected[4].SetActive(true);
-            GameDataManager.SetSelectedPlayer(4); // Set the selected player index
             NotSelected[4].SetActive(false);
         }
         else
         {
-            if (GameDataManager.GetCoins() >= allPlayerDetails.allPlayersDetails[4].playerPrice)
+            if (GameDataManager.GetCoins() >= priceOfPlayers[4])
             {
                 areYouSureSection[4].SetActive(true);
                 areYouSureSectionMain.SetActive(true);
@@ -331,21 +348,20 @@ public class ShopUIManager : MonoBehaviour
             {
                 DisableNotifier.Instance.gameObject.SetActive(true);
                 DisableNotifier.Instance.showTextNotifier("Not Enough Coins!");
-                Debug.Log("Not Engough Coins!");
+                Debug.Log("Not Enough Coins!");
             }
         }
     }
+
     private void onClickYesButton4()
     {
         UIButtonSoundManager.instance.buttonAudioPlay();
-
-        if (GameDataManager.GetCoins() >= allPlayerDetails.allPlayersDetails[4].playerPrice)
+        if (GameDataManager.GetCoins() >= priceOfPlayers[4])
         {
-            GameDataManager.AddCoins(-allPlayerDetails.allPlayersDetails[4].playerPrice);
-            allPlayerDetails.allPlayersDetails[4].isPlayerBuyed = true;
+            GameDataManager.AddCoins(-priceOfPlayers[4]);
+            GameDataManager.UnlockPlayerByName("Draven");
             initializePlayerEnableOrDisableUI();
-            GameDataManager.SetSelectedPlayer(4); // Set the selected player index
-            GameDataManager.IsPlayerUnlocked(allPlayerDetails.allPlayersDetails[4].playerName);
+            GameDataManager.SetSelectedPlayer(4);
             onClickPlayer1(); // Refresh selection
             areYouSureSection[4].SetActive(false);
             areYouSureSectionMain.SetActive(false);
@@ -358,27 +374,27 @@ public class ShopUIManager : MonoBehaviour
             Debug.Log("Not Enough Coins!");
         }
     }
+
     private void onClickNoButton4()
     {
         UIButtonSoundManager.instance.buttonAudioPlay();
-
         areYouSureSection[4].SetActive(false);
         areYouSureSectionMain.SetActive(false);
     }
+
     private void onClickPlayer5()
     {
         UIButtonSoundManager.instance.buttonAudioPlay();
-
-        if (allPlayerDetails.allPlayersDetails[5].isPlayerBuyed)
+        if (GameDataManager.IsPlayerUnlocked("Orion"))
         {
             DisableSelection();
-            GameDataManager.SetSelectedPlayer(5); // Set the selected player index
+            GameDataManager.SetSelectedPlayer(5);
             isSelected[5].SetActive(true);
             NotSelected[5].SetActive(false);
         }
         else
         {
-            if(GameDataManager.GetCoins() >= allPlayerDetails.allPlayersDetails[5].playerPrice)
+            if (GameDataManager.GetCoins() >= priceOfPlayers[5])
             {
                 areYouSureSection[5].SetActive(true);
                 areYouSureSectionMain.SetActive(true);
@@ -387,21 +403,20 @@ public class ShopUIManager : MonoBehaviour
             {
                 DisableNotifier.Instance.gameObject.SetActive(true);
                 DisableNotifier.Instance.showTextNotifier("Not Enough Coins!");
-                Debug.Log("Not Engough Coins!");
+                Debug.Log("Not Enough Coins!");
             }
         }
     }
+
     private void onClickYesButton5()
     {
         UIButtonSoundManager.instance.buttonAudioPlay();
-
-        if (GameDataManager.GetCoins() >= allPlayerDetails.allPlayersDetails[5].playerPrice)
+        if (GameDataManager.GetCoins() >= priceOfPlayers[5])
         {
-            GameDataManager.AddCoins(-allPlayerDetails.allPlayersDetails[5].playerPrice);
-            allPlayerDetails.allPlayersDetails[5].isPlayerBuyed = true;
+            GameDataManager.AddCoins(-priceOfPlayers[5]);
+            GameDataManager.UnlockPlayerByName("Orion");
             initializePlayerEnableOrDisableUI();
-            GameDataManager.SetSelectedPlayer(5); // Set the selected player index
-            GameDataManager.IsPlayerUnlocked(allPlayerDetails.allPlayersDetails[5].playerName);
+            GameDataManager.SetSelectedPlayer(5);
             onClickPlayer1(); // Refresh selection
             areYouSureSection[5].SetActive(false);
             areYouSureSectionMain.SetActive(false);
@@ -409,16 +424,15 @@ public class ShopUIManager : MonoBehaviour
         }
         else
         {
-
             DisableNotifier.Instance.gameObject.SetActive(true);
             DisableNotifier.Instance.showTextNotifier("Not Enough Coins!");
             Debug.Log("Not Enough Coins!");
         }
     }
+
     private void onClickNoButton5()
     {
         UIButtonSoundManager.instance.buttonAudioPlay();
-
         areYouSureSection[5].SetActive(false);
         areYouSureSectionMain.SetActive(false);
     }
@@ -426,7 +440,6 @@ public class ShopUIManager : MonoBehaviour
     private void onClickBackButton()
     {
         UIButtonSoundManager.instance.buttonAudioPlay();
-
         homeSection.SetActive(true);
         shopSection.SetActive(false);
     }

@@ -47898,16 +47898,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   detectionRange: 1000
-  attackRange: 3
-  moveSpeed: 2
-  attackInterval: 0.7
-  attackDamage: 4
+  attackRange: 5
+  moveSpeed: 5
+  attackInterval: 0.1
+  attackDamage: 25
   anim: {fileID: 1049256327862835364}
   bloodParticle: {fileID: 399305610567785764}
   rayOriginReference: {fileID: 2748504613853537396}
   bossAttackPracticle: {fileID: 574430001749434498}
-  clickCooldown: 1
-  raycastRange: 6
+  raycastRange: 10.44
   targetLayer:
     serializedVersion: 2
     m_Bits: 1024

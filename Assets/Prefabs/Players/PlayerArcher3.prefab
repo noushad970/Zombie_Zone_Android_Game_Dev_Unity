@@ -301,6 +301,68 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2673579531361095803}
   m_LocalEulerAnglesHint: {x: -0.2874, y: -90, z: 90}
+--- !u!1 &5566658231871612713
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2071074265004224812}
+  m_Layer: 10
+  m_Name: ReferenceTag
+  m_TagString: Archer
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2071074265004224812
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5566658231871612713}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 910823325743570709}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5845781362490542842
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8473887961158601491}
+  m_Layer: 10
+  m_Name: AttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8473887961158601491
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5845781362490542842}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.15, y: -0.73, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 910823325743570709}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7346252481481036442
 GameObject:
   m_ObjectHideFlags: 0
@@ -5649,6 +5711,8 @@ Transform:
   - {fileID: 3251160429863684367}
   - {fileID: 341649326688630121}
   - {fileID: 2831762705162106225}
+  - {fileID: 2071074265004224812}
+  - {fileID: 8473887961158601491}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &3697559197241218924
@@ -5813,7 +5877,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 4959744109677427077}
+  referenceForTag: {fileID: 5566658231871612713}
   runSpeed: 40
+  attackDelayVal: 1.1
+  jumpDelayVal: 0.5
   anim: {fileID: 7978656211919947950}
   jumpAnimDelay: 0.8
   isAttack: 0
@@ -5823,10 +5890,22 @@ MonoBehaviour:
   jumpButton: {fileID: 0}
   attackButton: {fileID: 0}
   boostButton: {fileID: 0}
+  shieldButton: {fileID: 0}
   attackAudio: {fileID: 5139521540471112495}
   JumpAudio: {fileID: 6558344276604560735}
   walkAudio: {fileID: 2358517610395215728}
   RunAudio: {fileID: 3881209621486333014}
+  shootPoint: {fileID: 8473887961158601491}
+  arrowPrefab: {fileID: 639844455689984039, guid: 927371fce7769c34aa17f8b34a102b8f,
+    type: 3}
+  shootForce: 12
+  bulletPrefab: {fileID: 0}
+  shootPointBullet: {fileID: 0}
+  bulletSpeed: 15
+  shellRemoveParticle: {fileID: 0}
+  spellPrefab: {fileID: 0}
+  shootPointSpell: {fileID: 0}
+  spellSpeed: 15
 --- !u!114 &6833168686970828623
 MonoBehaviour:
   m_ObjectHideFlags: 0
